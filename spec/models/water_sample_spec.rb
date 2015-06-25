@@ -49,4 +49,38 @@ RSpec.describe WaterSample do
       expect(result).to eq(expected_result)
     end
   end
+
+  describe '#to_hash' do
+    it 'returns an attributes hash' do
+      sample2 = WaterSample.find(2)
+      expected_hash = {
+        id: 2,
+        site: "North Hollywood Pump Station (well blend)",
+        chloroform: 0.00291,
+        bromoform: 0.00487,
+        bromodichloromethane: 0.00547,
+        dibromichloromethane: 0.0109
+      }
+      expect(sample2.to_hash).to eq(expected_hash)
+    end
+
+    context 'when include_factors is true' do
+      it 'merges all factor results into the attributes hash' do
+        sample2 = WaterSample.find(2)
+        expected_hash = {
+          id: 2,
+          site: "North Hollywood Pump Station (well blend)",
+          chloroform: 0.00291,
+          bromoform: 0.00487,
+          bromodichloromethane: 0.00547,
+          dibromichloromethane: 0.0109,
+          factor_1: 0.024007,
+          factor_2: 0.02415,
+          factor_3: 0.021627,
+          factor_4: 0.02887
+        }
+        expect(sample2.to_hash(true)).to eq(expected_hash)
+      end
+    end
+  end
 end

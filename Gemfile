@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'mysql2'
-gem 'rspec'
-gem 'pry-byebug'
+gem 'mysql2', '~> 0.3.18'
+gem 'rspec', '~> 3.3.0'
+gem 'pry-byebug', '~> ~> 3.4'

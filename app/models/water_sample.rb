@@ -2,8 +2,8 @@ require_relative '../../db/db_adapter'
 
 class WaterSample
   TRIHALOMETHANES =
-    [:chloroform, :bromoform, :bromodichloromethane, :dibromichloromethane]
-  ATTRIBUTES = [:id, :site] + TRIHALOMETHANES
+    %i(chloroform bromoform bromodichloromethane dibromichloromethane)
+  ATTRIBUTES = %i(id site) + TRIHALOMETHANES
 
   attr_accessor(*ATTRIBUTES)
 
@@ -14,19 +14,14 @@ class WaterSample
   end
 
   def initialize(attrs)
-    self.id = attrs['id']
-    self.site = attrs['site']
-    self.chloroform = attrs['chloroform']
-    self.bromoform = attrs['bromoform']
-    self.bromodichloromethane = attrs['bromodichloromethane']
-    self.dibromichloromethane = attrs['dibromichloromethane']
+    attributes.each { |e| send("#{e}=", attrs[e.to_s]) }
   end
 
   def factor(factor_weights_id)
     factor_weights = find_factor_weights(factor_weights_id)
 
-    trihalomethanes.inject(0) do |accumulator, element|
-      accumulator += send(element) * factor_weights["#{element.to_s}_weight"]
+    trihalomethanes.inject(0) do |memo, element|
+      memo + send(element) * factor_weights["#{element.to_s}_weight"]
     end
   end
 

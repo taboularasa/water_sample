@@ -37,6 +37,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  mysql2
-  pry-byebug
-  rspec
+  mysql2 (~> 0.3.18)
+  pry-byebug (~> 2.0.0)
+  rspec (~> 3.3.0)

@@ -12,13 +12,13 @@ class WaterSample
     new(results.first)
   end
 
-  def initialize(attributes)
-    self.id = attributes['id'],
-    self.site = attributes['site'],
-    self.chloroform = attributes['chloroform'],
-    self.bromoform = attributes['bromoform'],
-    self.bromodichloromethane = attributes['bromodichloromethane'],
-    self.dibromichloromethane = attributes['dibromichloromethane']
+  def initialize(attrs)
+    self.id = attrs['id']
+    self.site = attrs['site']
+    self.chloroform = attrs['chloroform']
+    self.bromoform = attrs['bromoform']
+    self.bromodichloromethane = attrs['bromodichloromethane']
+    self.dibromichloromethane = attrs['dibromichloromethane']
   end
 
   def factor(factor_weights_id)

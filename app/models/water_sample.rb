@@ -20,4 +20,24 @@ class WaterSample
     self.bromodichloromethane = attributes['bromodichloromethane'],
     self.dibromichloromethane = attributes['dibromichloromethane']
   end
+
+  def factor(factor_weights_id)
+    factor_weights = self.class.db.client.query(
+      "SELECT * FROM factor_weights WHERE id = #{factor_weights_id}"
+    ).first
+
+    trihalomethanes.inject(0) do |accumulator, element|
+      accumulator += send(element) * factor_weights["#{element.to_s}_weight"]
+    end
+  end
+
+  def self.db
+    @db ||= DbAdapter.instance
+  end
+
+  private
+
+  def trihalomethanes
+    TRIHALOMETHANES
+  end
 end
